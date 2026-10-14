@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Airport Hotel Maun Booking</title>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+(function(){
+emailjs.init("nv0l8B26-yIKX7G9D");
+})();
+</script>
+
+<style>
+body {
+font-family: Arial, sans-serif;
+background: #fff8e1;
+padding: 20px;
+}
+
+form {
+background: #ffffff;
+padding: 25px;
+border-radius: 12px;
+max-width: 550px;
+margin: auto;
+box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+border-top: 6px solid #f9a825;
+}
+
+.logo {
+display: block;
+margin: 0 auto 10px;
+max-width: 160px;
+height: auto;
+}
+
+h2 {
+text-align: center;
+color: #f57f17;
+}
+
+label {
+margin-top: 10px;
+display: block;
+font-weight: bold;
+color: #8d6e00;
+}
+
+input, select, textarea {
+width: 100%;
+padding: 10px;
+margin-top: 5px;
+border-radius: 6px;
+border: 1px solid #ffe082;
+outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+border-color: #f9a825;
+box-shadow: 0 0 5px rgba(249,168,37,0.4);
+}
+
+button {
+width: 100%;
+padding: 12px;
+background: #f9a825;
+color: #3e2723;
+border: none;
+border-radius: 6px;
+margin-top: 15px;
+cursor: pointer;
+font-size: 16px;
+font-weight: bold;
+transition: 0.3s;
+}
+
+button:hover {
+background: #f57f17;
+}
+</style>
+</head>
+
+<body>
+
+<img src="logo.png" alt="Airport Hotel Maun logo" class="logo">
+
+<h2>Book Your Stay</h2>
+
+<form id="booking-form">
+
+<input type="hidden" name="from_name" value="Airport Hotel Booking">
+
+<label>Full Name</label>
+<input type="text" name="name" required>
+
+<label>Email Address</label>
+<input type="email" name="email" required>
+
+<label>Phone Number (include country code)</label>
+<input type="tel" name="phone" placeholder="+267..." required>
+
+<label>Check-in Date</label>
+<input type="date" name="checkin" required>
+
+<label>Check-out Date</label>
+<input type="date" name="checkout" required>
+
+<label>Number of Adults</label>
+<input type="number" name="adults" min="1" required>
+
+<label>Number of Children</label>
+<input type="number" name="children" min="0" required>
+
+<label>Room Type</label>
+<select name="room" required>
+<option value="">Select Room Type</option>
+<option>Standard</option>
+<option>Executive</option>
+<option>Twin Beds</option>
+</select>
+
+<label>Number of Rooms</label>
+<input type="number" name="rooms" min="1" required>
+
+<label>Pets</label>
+<select name="pets" required>
+<option value="No">No</option>
+<option value="Yes">Yes</option>
+</select>
+
+<label>Airport Pickup</label>
+<select name="pickup" required>
+<option value="No">No</option>
+<option value="Yes">Yes</option>
+</select>
+
+<label>Special Requests</label>
+<textarea name="requests" rows="4"></textarea>
+
+<button type="submit">Submit Booking Request</button>
+
+</form>
+
+<script>
+document.getElementById("booking-form").addEventListener("submit", function(e) {
+e.preventDefault();
+
+// Date validation
+const checkin = new Date(this.checkin.value);
+const checkout = new Date(this.checkout.value);
+
+if (checkout <= checkin) {
+alert("Check-out must be after check-in date.");
+return;
+}
+
+// Send booking via EmailJS
+emailjs.sendForm("service_vvrreno", "template_i0bodjd", this)
+.then(function(response) {
+console.log("SUCCESS", response);
+alert("Booking received! We will contact you shortly.");
+document.getElementById("booking-form").reset();
+}, function(error) {
+console.log("FAILED", error);
+alert("Error: " + JSON.stringify(error));
+});
+});
+</script>
+
+</body>
+</html>
